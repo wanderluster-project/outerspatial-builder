@@ -1,0 +1,54 @@
+#modal-export .modal-body {
+  padding: 0;
+}
+#modal-export .nav-tabs {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-left: 15px;
+}
+#modal-export .nav-tabs li {
+  width: 85px;
+}
+#modal-export-description {
+  margin-bottom: 0;
+  padding: 15px;
+}
+#modal-export .modal-footer {
+  margin-top: 0;
+}
+#modal-export .tab-content {
+  overflow: auto;
+}
+#modal-export .well:last-child {
+  margin-bottom: 0;
+}
+#modal-export .well .row .thumbnail img {
+  cursor: pointer;
+}
+#modal-export .well .row .thumbnail p.title {
+  background-color: #000;
+  color: #fff;
+  margin-right: 20px;
+  padding: 8px 10px;
+  position: absolute;
+  margin-bottom: 0;
+}
+#modal-export .well .row .thumbnail .caption p {
+  margin-bottom: 0;
+}
+#modal-export .well h5 {
+  font-size: 20px;
+  margin-top: 0;
+}
+#modal-export .well .row {
+  margin-bottom: 10px;
+}
+#modal-export .well .row:last-child {
+  margin-bottom: 0;
+}
+#modal-export .well .row div:nth-child(n+4) {
+  margin-top: 20px;
+}
+#modal-export #modal-export-elsewhere textarea {
+  resize: none;
+}

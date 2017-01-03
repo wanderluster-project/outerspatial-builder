@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Map | Builder | InsideMaps | National Park Service</title>
+    <meta name="apple-mobile-web-app-title" content="NPMap Builder">
+    <meta name="application-name" content="NPMap Builder">
+    <meta name="author" content="The NPMap Team">
+    <meta name="description" content="The NPMap Builder makes it easy for National Park Service employees, partners, and contractors to build beautiful, performant, and accessible maps for the web and mobile.">
+    <meta name="keywords" content="US federal government, Department of Interior, National Park Service, map, digital, web, mobile, NPMap, national park, Leaflet, CartoDB, MapBox Hosting, Bing, Google, MapQuest, Esri">
+    <meta name="msapplication-TileColor" content="#222222">
+    <meta name="msapplication-TileImage" content="https://www.nps.gov/lib/assets/img/windows-8-tile.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link href="https://www.nps.gov/lib/bootstrap/3.3.2/css/nps-bootstrap.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/libs/alertify/css/alertify-core.css" rel="stylesheet">
+    <link href="assets/libs/alertify/css/alertify-bootstrap.css" rel="stylesheet">
+    <link href="assets/libs/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <link href="assets/libs/bootstrap-select/css/bootstrap-select.css" rel="stylesheet">
+    <link href="assets/libs/bootstrap-colorpickersliders/bootstrap.colorpickersliders.css" rel="stylesheet">
+    <link href="assets/libs/bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet">
+    <link href="assets/libs/typeahead/typeahead.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet" media="screen">
+    <link rel="alternate" type="application/atom+xml" href="https://www.nps.gov/npmap/blog/atom.xml" title="NPMap blog posts">
+    <link rel="shortcut icon" href="https://www.nps.gov/lib/assets/img/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.nps.gov/lib/assets/img/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://www.nps.gov/lib/assets/img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://www.nps.gov/lib/assets/img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="https://www.nps.gov/lib/assets/img/apple-touch-icon-57x57-precomposed.png">
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', 'UA-22502841-1');
+      ga('send', 'pageview');
+    </script>
+<!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.js"></script>
+<![endif]-->
+  </head>
+  <body>
+    <header>
+      <span id="logo">
+        <a href="../">
+          <img src="img/builder-logo.png">
+        </a>
+      </span>
+      <ol id="steps">
+        <li class="active"><button>1. Set Center & Zoom</button></li>
+        <li><button>2. Add & Customize Data</button></li>
+        <li><button>3. Tools & Behavior</button></li>
+      </ol>
+      <div id="metadata">
+        <div class="info">
+          <h1 class="title"><a href="#" data-placement="right" data-title="Enter a Title" data-type="text"></a></h1>
+          <p class="description"><a href="#" data-placement="right" data-title="Enter a Description" data-type="textarea"></a></p>
+        </div>
+        <div class="info-saved">
+          <p></p>
+        </div>
+        <span class="buttons">
+          <span class="btn-toolbar">
+            <span class="btn-group">
+              <button type="button" id="button-save" class="btn btn-default" data-container="#metadata .buttons" data-placement="bottom" rel="tooltip" title="Save Your Map">
+                <span class="fa fa-save">
+              </button>
+              <button type="button" id="button-settings" class="btn btn-default" data-container="#metadata .buttons" rel="tooltip" title="Update the Map Settings">
+                <span class="fa fa-cog"></span>
+                <span class="caret"></span>
+                <span style="height:100%;left:0;position:absolute;top:0;width:100%;"></span>
+              </button>
+              <button type="button" id="button-refresh" class="btn btn-default" data-container="#metadata .buttons" data-placement="bottom" rel="tooltip" title="Reload the Map">
+                <span class="fa fa-refresh">
+              </button>
+              <button type="button" id="button-config" class="btn btn-default" data-container="#metadata .buttons" data-placement="bottom" rel="tooltip" title="View Configuration Code">
+                <span class="fa fa-code">
+              </button>
+            </span>
+          </span>
+        </span>
+      </div>
+    </header>
+    <section>
+      <div class="step">
+        <div class="header">
+          <img src="img/step-1.png">
+          <h3>Set Center & Zoom</h3>
+        </div>
+        <div class="content" id="set-center-and-zoom">
+          <div class="top">
+            <p>Use map to...</p>
+            <button class="btn btn-subtle btn-block">Set Center to <span id="current-lat">39.00</span>, <span id="current-lng">-96.00</span></button>
+            <button class="btn btn-subtle btn-block">Set Zoom to <span id="current-zoom">4</span></button>
+            <button class="btn btn-subtle btn-block">Set Center & Zoom</button>
+            <button class="btn btn-subtle btn-block">Restrict Bounds</button>
+            <p class="help-block">The map's viewport is constrained to the bounds of the area you defined.</p>
+          </div>
+          <div class="bottom">
+            <h5 style="font-weight:bold;">Min and Max Zoom Levels</h5>
+            <p style="margin-bottom:20px;">Use the slider to restrict the map to a range of zoom levels.</p>
+            <input type="text" id="set-zoom" class="form-control" required>
+            <p class="help-block" style="margin:20px 0 0 0;">Initial Center: <span class="lat">39.00</span>, <span class="lng">-96.00</span><br>Initial Zoom: <span class="zoom">4</span></p>
+          </div>
+        </div>
+        <div class="footer">
+          <button class="btn btn-primary" type="button">Add & Customize Data &#187;</button>
+        </div>
+      </div>
+      <div class="step">
+        <div class="header">
+          <img src="img/step-2.png">
+          <h3>Add & Customize Data</h3>
+        </div>
+        <div class="content">
+          <div>
+            <p>Add data to your map in a variety of ways.</p>
+            <button id="button-editBaseMaps" class="btn btn-subtle">&#9656;<span>Edit Basemaps</span></button>
+            <button id="button-addLayer" class="btn btn-subtle">&#9656;<span>Add an Overlay</span></button>
+            <!--
+            <p style="margin-top:5px;">Or upload your GeoJSON, KML, Shapefile, or File Geodatabase by dropping it into the rectangle below.</p>
+            <div id="dropzone">
+              <form action="/builder/upload" class="dropzone">
+                <p class="dz-message">Drop files to upload (or click)</p>
+              </form>
+            </div>
+            -->
+          </div>
+          <div class="dd">
+            <ul id="layers" class="dd-list">
+            </ul>
+          </div>
+          <button id="button-editBaseMapsAgain">Edit Basemaps</button>
+          <button id="button-addAnotherLayer">Add an Overlay</button>
+        </div>
+        <div class="footer">
+          <button class="btn btn-link" type="button">&#171 Back</button>
+          <button class="btn btn-primary" type="button">Tools & Behavior &#187;</button>
+        </div>
+      </div>
+      <div class="step" id="tools-and-settings">
+        <div class="header">
+          <img src="img/step-3.png">
+          <h3>Tools & Behavior</h3>
+        </div>
+        <div class="content">
+          <form style="margin-bottom:15px;">
+            <fieldset>
+              <legend>Tools</legend>
+              <div class="checkbox">
+                <label><input type="checkbox" value="editControl">Draw</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="fullscreenControl">Fullscreen</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="geocoderControl">Geocoder</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="hashControl">Hash</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="homeControl" checked="checked">Home</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="locateControl">Locate</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="measureControl">Measure</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="overviewControl">Overview</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="printControl">Print</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="scaleControl">Scale</label>
+              </div>
+              <!--
+              <div class="checkbox">
+                <label><input type="checkbox" value="shareControl">Share</label>
+              </div>
+              -->
+              <div class="checkbox">
+                <label><input type="checkbox" value="smallzoomControl" checked="checked">Zoom Buttons</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="zoomdisplayControl">Zoom Display</label>
+              </div>
+            </fieldset>
+          </form>
+          <form>
+            <fieldset>
+              <legend>Behavior</legend>
+              <div class="checkbox">
+                <label><input type="checkbox" value="dragging" checked="checked">Draggable</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="doubleClickZoom" checked="checked">Double-click Zoom</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="scrollWheelZoom" checked="checked">Scroll Wheel Zoom</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="boxZoom" checked="checked">Box Zoom</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="touchZoom" checked="checked">Touch Zoom (Touchscreen)</label>
+              </div>
+            </fieldset>
+          </form>
+          <!--
+          <form>
+            <fieldset>
+              <legend>Modules</legend>
+              <div class="checkbox">
+                <label><input type="checkbox" value="itinerary">Itinerary</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="route">Route</label>
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox" value="storymap">Story Map</label>
+              </div>
+            </fieldset>
+          </form>
+          -->
+        </div>
+        <div class="footer">
+          <button class="btn btn-link" type="button">&#171 Back</button>
+          <button class="btn btn-primary" id="button-export" type="button">Save & Export Map</button>
+        </div>
+      </div>
+      <div id="map">
+        <iframe id="iframe-map"></iframe>
+      </div>
+    </section>
+    <footer>
+      <ul>
+        <li class="home-link"><a href="http://insidemaps.nps.gov/builder/">Home</a></li>
+        <li><a href="https://www.nps.gov/npmap/" target="_blank">About NPMap</a></li>
+        <li><a href="mailto:npmap@nps.gov">Contact Us</a></li>
+        <li><a href="https://github.com/nationalparkservice/npmap-builder/issues/">Submit Feedback</a></li>
+        <li><a href="https://www.nps.gov/npmap/tools/npmap-builder/docs/">View Help</a></li>
+      </ul>
+      <span class="build-id"></span>
+    </footer>
+    <div id="modal-confirm" class="modal" role="dialog" aria-describedby="" aria-labelledby="modal-confirm-title">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 id="modal-confirm-title" class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            <button class="btn btn-primary">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modal-signin" class="modal" role="dialog" aria-describedby="" aria-labelledby="modal-confirm-title" data-backdrop="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 id="modal-confirm-title" class="modal-title">Please Log In</h4>
+          </div>
+          <div class="modal-body">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="loading" class="progress progress-striped active">
+      <div class="progress-bar" role="progressbar" aria-valuemax="100" aria-valuemin="100" aria-valuenow="100" style="width:100%;"></div>
+    </div>
+    <div id="mask" class="modal-backdrop in"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <script src="https://www.nps.gov/lib/bootstrap/3.3.2/js/nps-bootstrap.js"></script>
+    <script src="assets/libs/alertify/js/alertify.js"></script>
+    <script src="assets/libs/bootstrap-colorpickersliders/bootstrap.colorpickersliders.js"></script>
+    <script src="assets/libs/bootstrap-editable/js/bootstrap-editable.js"></script>
+    <script src="assets/libs/bootstrap-filestyle/js/bootstrap-filestyle.js"></script>
+    <script src="assets/libs/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="assets/libs/bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script src="assets/libs/dropzone.js"></script>
+    <script src="assets/libs/jquery-nestable/js/jquery-nestable.js"></script>
+    <script src="assets/libs/moment.js"></script>
+    <script src="assets/libs/typeahead/typeahead.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

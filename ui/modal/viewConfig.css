@@ -1,0 +1,10 @@
+#modal-viewConfig .modal-body {
+  margin-bottom: 15px;
+}
+#modal-viewConfig-code {
+  font-size: 12px;
+  resize: none;
+}
+#modal-viewConfig form {
+  width: 565px;
+}

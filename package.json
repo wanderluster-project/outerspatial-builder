@@ -1,0 +1,27 @@
+{
+  "bugs": {
+    "email": "npmap@nps.gov",
+    "url": "https://github.com/nationalparkservice/npmap-builder/issues/"
+  },
+  "description": "A Grunt project to concatenate and minify JavaScript and CSS for the NPMap Builder.",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-htmlmin": "~0.2.0",
+    "grunt-string-replace": "^1.2.0",
+    "grunt-contrib-uglify": "~0.3.2"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "homepage": "https://www.nps.gov/npmap/tools/npmap-builder/",
+  "licenses": [
+    {
+      "type": "Public Domain",
+      "url": "https://github.com/nationalparkservice/npmap-builder/blob/master/LICENSE.md"
+    }
+  ],
+  "version": "0.0.0"
+}
