@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="NPS Maps">
+    <meta name="application-name" content="NPS Maps">
+    <meta name="author" content="National Park Service">
+    <meta name="keywords" content="US federal government, Department of Interior, National Park Service, map, digital, web, mobile, Harpers Ferry Center, NPMap, national park, Leaflet, CartoDB, Mapbox, Bing, Google, MapQuest, Esri">
+    <meta name="msapplication-TileColor" content="#222222">
+    <meta name="msapplication-TileImage" content="https://www.nps.gov/npmap/assets/img/windows-8-tile.png">
+    <base target="_parent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link href="https://www.nps.gov/lib/assets/img/favicon.ico" rel="shortcut icon">
+    <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-144x144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+    <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-114x114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+    <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-72x72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+    <link href="https://www.nps.gov/lib/assets/img/apple-touch-icon-57x57-precomposed.png" rel="apple-touch-icon-precomposed">
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>Maps | National Park Service</title>
+    <link href="https://www.nps.gov/lib/bootstrap/3.3.2/css/nps-bootstrap.min.css" rel="stylesheet">
+    <link href="/maps/assets/css/embed.min.css" rel="stylesheet">
+    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-46639323-1','nps.gov');ga('send','pageview');</script>
+    <script src="https://www.nps.gov/common/commonspot/templates/js/federated-analytics.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      function loadCallback(response) {
+        if (response.meta) {
+          document.title = response.meta.title;
+        } else {
+          document.title = response.name;
+        }
+      }
+    </script>
+    <script src="/maps/assets/libs/reqwest.min.js"></script>
+    <script src="/maps/assets/js/load.min.js"></script>
+  </body>
+</html>

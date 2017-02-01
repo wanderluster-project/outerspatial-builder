@@ -2,16 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Map | Builder | InsideMaps | National Park Service</title>
-    <meta name="apple-mobile-web-app-title" content="NPMap Builder">
-    <meta name="application-name" content="NPMap Builder">
-    <meta name="author" content="The NPMap Team">
-    <meta name="description" content="The NPMap Builder makes it easy for National Park Service employees, partners, and contractors to build beautiful, performant, and accessible maps for the web and mobile.">
-    <meta name="keywords" content="US federal government, Department of Interior, National Park Service, map, digital, web, mobile, NPMap, national park, Leaflet, CartoDB, MapBox Hosting, Bing, Google, MapQuest, Esri">
-    <meta name="msapplication-TileColor" content="#222222">
-    <meta name="msapplication-TileImage" content="https://www.nps.gov/lib/assets/img/windows-8-tile.png">
+    <title>Map | Builder | OuterSpatial</title>
+    <meta name="apple-mobile-web-app-title" content="OuterSpatial Builder">
+    <meta name="application-name" content="OuterSpatial Builder">
+    <meta name="author" content="Trailhead Labs">
+    <meta name="description" content="OuterSpatial Builder makes it easy for organizations using the OuterSpatial outdoor technology platform to build beautiful, performant, and accessible maps for the web and mobile.">
+    <meta name="keywords" content="map, digital, web, mobile, Trailhead Labs, national park, Leaflet, CartoDB, MapBox Hosting, Bing, Google, MapQuest, Esri, OuterSpatial">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link href="https://www.nps.gov/lib/bootstrap/3.3.2/css/nps-bootstrap.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
     <link href="assets/libs/alertify/css/alertify-core.css" rel="stylesheet">
     <link href="assets/libs/alertify/css/alertify-bootstrap.css" rel="stylesheet">
@@ -21,32 +19,24 @@
     <link href="assets/libs/bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet">
     <link href="assets/libs/typeahead/typeahead.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet" media="screen">
-    <link rel="alternate" type="application/atom+xml" href="https://www.nps.gov/npmap/blog/atom.xml" title="NPMap blog posts">
-    <link rel="shortcut icon" href="https://www.nps.gov/lib/assets/img/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.nps.gov/lib/assets/img/apple-touch-icon-144x144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://www.nps.gov/lib/assets/img/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://www.nps.gov/lib/assets/img/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="https://www.nps.gov/lib/assets/img/apple-touch-icon-57x57-precomposed.png">
     <script>
-      (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-          (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-      ga('create', 'UA-22502841-1');
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-47793966-2', 'outerspatial.com');
       ga('send', 'pageview');
     </script>
 <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.js"></script>
 <![endif]-->
   </head>
   <body>
     <header>
       <span id="logo">
         <a href="../">
-          <img src="img/builder-logo.png">
+          <img src="img/builder-logo@2x.png">
         </a>
       </span>
       <ol id="steps">
@@ -241,11 +231,11 @@
     </section>
     <footer>
       <ul>
-        <li class="home-link"><a href="http://insidemaps.nps.gov/builder/">Home</a></li>
-        <li><a href="https://www.nps.gov/npmap/" target="_blank">About NPMap</a></li>
-        <li><a href="mailto:npmap@nps.gov">Contact Us</a></li>
-        <li><a href="https://github.com/nationalparkservice/npmap-builder/issues/">Submit Feedback</a></li>
-        <li><a href="https://www.nps.gov/npmap/tools/npmap-builder/docs/">View Help</a></li>
+        <li class="home-link"><a href="https://www.outerspatial.com/">Home</a></li>
+        <li><a href="https://www.trailheadlabs.com/" target="_blank">About Trailhead Labs</a></li>
+        <li><a href="mailto:hi@trailheadlabs.com">Contact Us</a></li>
+        <li><a href="https://github.com/trailheadlabs/outerspatial-builder/issues/">Submit Feedback</a></li>
+        <li><a href="#">View Help</a></li>
       </ul>
       <span class="build-id"></span>
     </footer>
@@ -282,7 +272,7 @@
     </div>
     <div id="mask" class="modal-backdrop in"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-    <script src="https://www.nps.gov/lib/bootstrap/3.3.2/js/nps-bootstrap.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="assets/libs/alertify/js/alertify.js"></script>
     <script src="assets/libs/bootstrap-colorpickersliders/bootstrap.colorpickersliders.js"></script>
     <script src="assets/libs/bootstrap-editable/js/bootstrap-editable.js"></script>

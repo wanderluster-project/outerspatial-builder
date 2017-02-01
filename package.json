@@ -1,9 +1,9 @@
 {
   "bugs": {
-    "email": "npmap@nps.gov",
-    "url": "https://github.com/nationalparkservice/npmap-builder/issues/"
+    "email": "hi@trailheadlabs.com",
+    "url": "https://github.com/trailheadlabs/outerspatial-builder/issues/"
   },
-  "description": "A Grunt project to concatenate and minify JavaScript and CSS for the NPMap Builder.",
+  "description": "Build web maps on top of OuterSpatial.js.",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-clean": "~0.5.0",
@@ -16,11 +16,11 @@
   "engines": {
     "node": "*"
   },
-  "homepage": "https://www.nps.gov/npmap/tools/npmap-builder/",
+  "homepage": "https://www.outerspatial.com",
   "licenses": [
     {
-      "type": "Public Domain",
-      "url": "https://github.com/nationalparkservice/npmap-builder/blob/master/LICENSE.md"
+      "type": "MIT",
+      "url": "https://github.com/trailheadlabs/outerspatial-builder/raw/master/LICENSE.md"
     }
   ],
   "version": "0.0.0"

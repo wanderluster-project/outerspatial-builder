@@ -6,7 +6,7 @@ That said, output from Builder should provide a good base starting point for all
 
 ## Thanks
 
-This library was initially built by the U.S. National Park Service's [NPMap team](https://www.nps.gov/npmap/) and called NPMap Builder. The agency recently decided to make the repository private, but luckily they made it available in the public domain so we ([Trailhead Labs](https://www.trailheadlabs.com)) have decided to host it and push development forward.
+Initial development on this project was done by the U.S. National Park Service's [NPMap team](https://www.nps.gov/npmap/) and called NPMap Builder. The agency recently made the repository private, but luckily made the code available in the public domain so we ([Trailhead Labs](https://www.trailheadlabs.com)) have decided to host it and push development forward.
 
 ## Build
 

@@ -1,16 +1,15 @@
 /* globals $, tinycolor */
 
-var npmapjsVersion = '3.0.18';
+var outerspatialJsVersion = '4.0.2';
 var alertify;
 var Builder;
 var mapId;
 var moment;
-var NPMap;
+var OuterSpatial;
 
 function ready () {
   Builder = (function () {
     var $activeChangeStyleButton = null;
-    var $activeConfigureInteractivityButton = null;
     var $buttonAddAnotherLayer = $('#button-addAnotherLayer');
     var $buttonCreateDatasetAgain = $('#button-createDatasetAgain');
     var $buttonEditBaseMapsAgain = $('#button-editBaseMapsAgain');
@@ -26,6 +25,7 @@ function ready () {
     var $ul = $('#layers');
     var $zoom = $('#set-center-and-zoom .zoom');
     var abcs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    var $activeConfigureInteractivityButton;
     var colors = [];
     var description = null;
     var descriptionSet = false;
@@ -326,7 +326,7 @@ function ready () {
       }
 
       if (!colors.length) {
-        $.each(document.getElementById('iframe-map').contentWindow.L.npmap.preset.colors, function (prop, value) {
+        $.each(document.getElementById('iframe-map').contentWindow.L.outerspatial.preset.colors, function (prop, value) {
           // TODO: Use prop too.
           colors.push(value.color);
         });
@@ -334,7 +334,7 @@ function ready () {
 
       if (!optionsMaki.length) {
         sortable = [];
-        $.each(document.getElementById('iframe-map').contentWindow.L.npmap.preset.maki, function (prop, value) {
+        $.each(document.getElementById('iframe-map').contentWindow.L.outerspatial.preset.maki, function (prop, value) {
           sortable.push({
             icon: value.icon,
             name: value.name
@@ -351,7 +351,7 @@ function ready () {
         var numbers = [];
 
         sortable = [];
-        $.each(document.getElementById('iframe-map').contentWindow.L.npmap.preset.npmapsymbollibrary, function (prop, value) {
+        $.each(document.getElementById('iframe-map').contentWindow.L.outerspatial.preset.npmapsymbollibrary, function (prop, value) {
           var lower = value.name.toLowerCase();
           var obj = {
             icon: value.icon,
@@ -400,7 +400,7 @@ function ready () {
       return $.inArray($(el).parent().parent().parent().prev().text(), abcs);
     }
     function getLeafletMap () {
-      return document.getElementById('iframe-map').contentWindow.NPMap.config.L;
+      return document.getElementById('iframe-map').contentWindow.OuterSpatial.config.L;
     }
     function goToStep (from, to) {
       $($stepSection[from]).hide();
@@ -436,7 +436,7 @@ function ready () {
             description: description,
             isPublic: true,
             isShared: true,
-            json: JSON.stringify(NPMap),
+            json: JSON.stringify(OuterSpatial),
             mapId: mapId || null,
             // TODO: Change "name" to "title" for consistency. Need to make this change serverside.
             name: title
@@ -444,7 +444,7 @@ function ready () {
           dataType: 'json',
           error: function () {
             Builder.hideLoading();
-            alertify.error('You must be connected to the National Park Service network to save a map.');
+            alertify.error('Sorry, there was an unhandled error while saving your map. Please try again.');
 
             if (typeof callback === 'function') {
               callback(false);
@@ -467,7 +467,7 @@ function ready () {
                   }, '', url);
                 }
 
-                mapId = NPMap.meta.mapId = response.mapId;
+                mapId = OuterSpatial.meta.mapId = response.mapId;
                 updateSaveStatus(response.modified);
                 alertify.success('Your map was saved!');
                 success = true;
@@ -492,7 +492,7 @@ function ready () {
           url: '/builder/save/'
         });
       } else {
-        alertify.error('Maps cannot be saved while using the NPMap Builder demonstration.');
+        alertify.error('Maps cannot be saved while using the OuterSpatial Builder demonstration.');
       }
     }
     function unescapeHtml (unsafe) {
@@ -500,13 +500,13 @@ function ready () {
         .replace(/&amp;/g, '&')
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '\"');
+        .replace(/&quot;/g, '"');
         // .replace(/&#039;/g, '\'');
     }
     function updateInitialCenterAndZoom () {
-      $lat.html(NPMap.center.lat.toFixed(2));
-      $lng.html(NPMap.center.lng.toFixed(2));
-      $zoom.html(NPMap.zoom);
+      $lat.html(OuterSpatial.center.lat.toFixed(2));
+      $lng.html(OuterSpatial.center.lng.toFixed(2));
+      $zoom.html(OuterSpatial.zoom);
     }
     function updateSaveStatus (date) {
       $('.info-saved p').text('Saved ' + moment(date).format('MM/DD/YYYY') + ' at ' + moment(date).format('h:mm:ssa'));
@@ -628,9 +628,9 @@ function ready () {
         },
         metadata: {
           init: function () {
-            description = NPMap.meta.description;
+            description = OuterSpatial.meta.description;
             firstLoad = true;
-            title = NPMap.meta.title;
+            title = OuterSpatial.meta.title;
 
             $('#metadata .description a').text(description).editable({
               animation: false,
@@ -672,7 +672,7 @@ function ready () {
                 }
 
                 description = newDescription;
-                NPMap.meta.description = description;
+                OuterSpatial.meta.description = description;
               })
               .on('shown', function () {
                 var next = $(this).parent().next();
@@ -724,7 +724,7 @@ function ready () {
                 }
 
                 title = newTitle;
-                NPMap.meta.title = title;
+                OuterSpatial.meta.title = title;
               })
               .on('shown', function () {
                 var next = $(this).next();
@@ -746,15 +746,15 @@ function ready () {
               });
           },
           load: function () {
-            if (NPMap.description) {
-              $('#metadata .description a').text(NPMap.description);
+            if (OuterSpatial.description) {
+              $('#metadata .description a').text(OuterSpatial.description);
             }
 
-            if (NPMap.name) {
-              $('#metadata .title a').text(NPMap.name);
+            if (OuterSpatial.name) {
+              $('#metadata .title a').text(OuterSpatial.name);
             }
 
-            updateSaveStatus(NPMap.modified);
+            updateSaveStatus(OuterSpatial.modified);
           }
         },
         steps: {
@@ -824,7 +824,7 @@ function ready () {
               clickApplyInteractivity: function (elName) {
                 var d = $('#' + elName + '_description').val();
                 var index = parseInt(elName.replace('overlay-index-', ''), 10);
-                var overlay = NPMap.overlays[index];
+                var overlay = OuterSpatial.overlays[index];
                 var popup = {};
                 var t = $('#' + elName + '_title').val();
                 var tooltip = $('#' + elName + '_tooltip').val();
@@ -854,7 +854,7 @@ function ready () {
                 Builder.updateMap();
               },
               clickApplyStyles: function (elName) {
-                var overlay = NPMap.overlays[parseInt(elName.replace('overlay-index-', ''), 10)];
+                var overlay = OuterSpatial.overlays[parseInt(elName.replace('overlay-index-', ''), 10)];
                 var updated = {};
 
                 $.each($('#' + elName + '_layer-change-style input, #' + elName + '_layer-change-style select'), function (i, el) {
@@ -891,9 +891,9 @@ function ready () {
                   $el.popover('toggle');
                 } else {
                   var index = getLayerIndexFromButton(el);
-                  var layer = document.getElementById('iframe-map').contentWindow.NPMap.config.overlays[index];
+                  var layer = document.getElementById('iframe-map').contentWindow.OuterSpatial.config.overlays[index];
                   var name = 'overlay-index-' + index;
-                  var overlay = NPMap.overlays[index];
+                  var overlay = OuterSpatial.overlays[index];
 
                   $el.popover({
                     animation: false,
@@ -1024,7 +1024,7 @@ function ready () {
                   $el.popover('toggle');
                 } else {
                   var index = getLayerIndexFromButton(el);
-                  var overlay = NPMap.overlays[index];
+                  var overlay = OuterSpatial.overlays[index];
                   var name = 'overlay-index-' + index;
                   var supportsTooltips = (overlay.type === 'cartodb' || overlay.type === 'csv' || overlay.type === 'geojson' || overlay.type === 'kml' || overlay.type === 'mapbox');
                   var html;
@@ -1034,11 +1034,11 @@ function ready () {
                     '<form class="configure-interactivity" id="' + name + '_layer-configure-interactivity" role="form">' +
                       '<fieldset>' +
                         '<div class="form-group">' +
-                          '<span><label for="' + name + '_title">Title</label><a href="https://www.nps.gov/npmap/tools/npmap-builder/docs/popups-and-tooltips/" target="_blank"><img data-container="body" data-placement="bottom" rel="tooltip" src="img/help@2x.png" style="cursor:pointer;float:right;height:18px;" title="The title will display in bold at the top of the popup. HTML and Handlebars templates are allowed. Click for more info."></a></span>' +
+                          // '<span><label for="' + name + '_title">Title</label><a href="https://www.nps.gov/npmap/tools/npmap-builder/docs/popups-and-tooltips/" target="_blank"><img data-container="body" data-placement="bottom" rel="tooltip" src="img/help@2x.png" style="cursor:pointer;float:right;height:18px;" title="The title will display in bold at the top of the popup. HTML and Handlebars templates are allowed. Click for more info."></a></span>' +
                           '<input class="form-control" id="' + name + '_title" rows="3" type="text"></input>' +
                         '</div>' +
                         '<div class="form-group">' +
-                          '<span><label for="' + name + '_description">Description</label><a href="https://www.nps.gov/npmap/tools/npmap-builder/docs/popups-and-tooltips/" target="_blank"><img data-container="body" data-placement="bottom" rel="tooltip" src="img/help@2x.png" style="cursor:pointer;float:right;height:18px;" title="The description will display underneath the title. HTML and Handlebars templates are allowed. Click for more info."></a></span>' +
+                          // '<span><label for="' + name + '_description">Description</label><a href="https://www.nps.gov/npmap/tools/npmap-builder/docs/popups-and-tooltips/" target="_blank"><img data-container="body" data-placement="bottom" rel="tooltip" src="img/help@2x.png" style="cursor:pointer;float:right;height:18px;" title="The description will display underneath the title. HTML and Handlebars templates are allowed. Click for more info."></a></span>' +
                           '<textarea class="form-control" id="' + name + '_description" rows="4"></textarea>' +
                         '</div>' +
                         (supportsTooltips ? '' +
@@ -1048,7 +1048,7 @@ function ready () {
                             '</label>' +
                           '</div>' +
                           '<div class="form-group">' +
-                            '<span><label for="' + name + '_tooltip">Tooltip</label><a href="https://www.nps.gov/npmap/tools/npmap-builder/docs/popups-and-tooltips/" target="_blank"><img data-container="body" data-placement="bottom" rel="tooltip" src="img/help@2x.png" style="cursor:pointer;float:right;height:18px;" title="Tooltips display when the cursor moves over a shape. HTML and Handlebars templates are allowed. Click for more info."></a></span>' +
+                            // '<span><label for="' + name + '_tooltip">Tooltip</label><a href="https://www.nps.gov/npmap/tools/npmap-builder/docs/popups-and-tooltips/" target="_blank"><img data-container="body" data-placement="bottom" rel="tooltip" src="img/help@2x.png" style="cursor:pointer;float:right;height:18px;" title="Tooltips display when the cursor moves over a shape. HTML and Handlebars templates are allowed. Click for more info."></a></span>' +
                             '<input class="form-control" id="' + name + '_tooltip" type="text" disabled></input>' +
                           '</div>' +
                         '' : '') +
@@ -1074,7 +1074,7 @@ function ready () {
                     .on('shown.bs.popover', function () {
                       var config;
 
-                      overlay = NPMap.overlays[getLayerIndexFromButton(el)];
+                      overlay = OuterSpatial.overlays[getLayerIndexFromButton(el)];
                       config = overlay.popup;
                       $activeConfigureInteractivityButton = $el;
                       $('#mask').show();
@@ -1135,7 +1135,7 @@ function ready () {
                 var index = getLayerIndexFromButton(el);
 
                 function callback () {
-                  Builder.ui.modal.addLayer._load(NPMap.overlays[index]);
+                  Builder.ui.modal.addLayer._load(OuterSpatial.overlays[index]);
                   Builder.ui.modal.addLayer._editingIndex = index;
                   $modalAddLayer.off('shown.bs.modal', callback);
                 }
@@ -1215,14 +1215,14 @@ function ready () {
                       var from = $.inArray($($(li).children('.letter')[0]).text(), abcs);
 
                       if (from !== i) {
-                        overlays.splice(i, 0, NPMap.overlays[from]);
+                        overlays.splice(i, 0, OuterSpatial.overlays[from]);
                       } else {
-                        overlays.push(NPMap.overlays[from]);
+                        overlays.push(OuterSpatial.overlays[from]);
                       }
                     });
 
                     if (overlays.length) {
-                      NPMap.overlays = overlays;
+                      OuterSpatial.overlays = overlays;
                       Builder.updateMap();
                     }
 
@@ -1252,8 +1252,8 @@ function ready () {
               });
             },
             load: function () {
-              if ($.isArray(NPMap.overlays)) {
-                $.each(NPMap.overlays, function (i, overlay) {
+              if ($.isArray(OuterSpatial.overlays)) {
+                $.each(OuterSpatial.overlays, function (i, overlay) {
                   Builder.ui.steps.addAndCustomizeData.overlayToLi(overlay);
                 });
               }
@@ -1331,7 +1331,7 @@ function ready () {
               $(buttonBlocks[0]).on('click', function () {
                 var center = getLeafletMap().getCenter();
 
-                NPMap.center = {
+                OuterSpatial.center = {
                   lat: center.lat,
                   lng: center.lng
                 };
@@ -1339,7 +1339,7 @@ function ready () {
                 Builder.updateMap();
               });
               $(buttonBlocks[1]).on('click', function () {
-                NPMap.zoom = getLeafletMap().getZoom();
+                OuterSpatial.zoom = getLeafletMap().getZoom();
                 updateInitialCenterAndZoom();
                 Builder.updateMap();
               });
@@ -1347,11 +1347,11 @@ function ready () {
                 var map = getLeafletMap();
                 var center = map.getCenter();
 
-                NPMap.center = {
+                OuterSpatial.center = {
                   lat: center.lat,
                   lng: center.lng
                 };
-                NPMap.zoom = map.getZoom();
+                OuterSpatial.zoom = map.getZoom();
 
                 updateInitialCenterAndZoom();
                 Builder.updateMap();
@@ -1360,7 +1360,7 @@ function ready () {
                 var $this = $(this);
 
                 if ($this.hasClass('active')) {
-                  delete NPMap.maxBounds;
+                  delete OuterSpatial.maxBounds;
                   $this.removeClass('active').text('Restrict Bounds');
                   $this.next().hide();
                 } else {
@@ -1368,7 +1368,7 @@ function ready () {
                   var northEast = bounds.getNorthEast();
                   var southWest = bounds.getSouthWest();
 
-                  NPMap.maxBounds = [
+                  OuterSpatial.maxBounds = [
                     [southWest.lat, southWest.lng],
                     [northEast.lat, northEast.lng]
                   ];
@@ -1383,18 +1383,18 @@ function ready () {
                 // center: 4,
                 max: 19,
                 min: 0,
-                value: [typeof NPMap.minZoom === 'number' ? NPMap.minZoom : 0, typeof NPMap.maxZoom === 'number' ? NPMap.maxZoom : 19]
+                value: [typeof OuterSpatial.minZoom === 'number' ? OuterSpatial.minZoom : 0, typeof OuterSpatial.maxZoom === 'number' ? OuterSpatial.maxZoom : 19]
               })
                 .on('slideStop', function (e) {
-                  NPMap.maxZoom = e.value[1];
-                  NPMap.minZoom = e.value[0];
+                  OuterSpatial.maxZoom = e.value[1];
+                  OuterSpatial.minZoom = e.value[0];
                   Builder.updateMap();
                 });
             },
             load: function () {
               updateInitialCenterAndZoom();
 
-              if (typeof NPMap.maxBounds === 'object') {
+              if (typeof OuterSpatial.maxBounds === 'object') {
                 var $bounds = $($('#set-center-and-zoom .btn-block')[3]);
 
                 $bounds.addClass('active').text('Remove Bounds Restriction');
@@ -1412,10 +1412,10 @@ function ready () {
 
                     if (value === 'overviewControl') {
                       if (checked) {
-                        NPMap[value] = {
+                        OuterSpatial[value] = {
                           layer: (function () {
-                            for (var i = 0; i < NPMap.baseLayers.length; i++) {
-                              var baseLayer = NPMap.baseLayers[0];
+                            for (var i = 0; i < OuterSpatial.baseLayers.length; i++) {
+                              var baseLayer = OuterSpatial.baseLayers[0];
 
                               if (typeof baseLayer.visible === 'undefined' || baseLayer.visible === true) {
                                 return baseLayer;
@@ -1424,10 +1424,10 @@ function ready () {
                           })()
                         };
                       } else {
-                        NPMap[value] = false;
+                        OuterSpatial[value] = false;
                       }
                     } else {
-                      NPMap[value] = checked;
+                      OuterSpatial[value] = checked;
                     }
 
                     Builder.updateMap();
@@ -1440,7 +1440,7 @@ function ready () {
                 $.each($(form).find('input'), function (j, input) {
                   var $input = $(input);
                   var name = $input.attr('value');
-                  var property = NPMap[name];
+                  var property = OuterSpatial[name];
 
                   if (typeof property !== 'undefined') {
                     $input.attr('checked', property);
@@ -1525,7 +1525,7 @@ function ready () {
         }
       },
       addOverlay: function (overlay) {
-        NPMap.overlays.push(overlay);
+        OuterSpatial.overlays.push(overlay);
         Builder.ui.steps.addAndCustomizeData.overlayToLi(overlay);
       },
       buildTooltips: function () {
@@ -1540,7 +1540,7 @@ function ready () {
         document.body.removeChild(document.getElementById('loading-backdrop'));
       },
       removeOverlay: function (index) {
-        NPMap.overlays.splice(index, 1);
+        OuterSpatial.overlays.splice(index, 1);
         this.updateMap();
       },
       showConfirm: function (button, content, t, callback) {
@@ -1562,16 +1562,16 @@ function ready () {
       updateMap: function (callback, manualRefresh) {
         var interval;
 
-        $iframe.attr('src', 'iframe.html?v=' + npmapjsVersion);
+        $iframe.attr('src', 'iframe.html?v=' + outerspatialJsVersion);
 
         interval = setInterval(function () {
-          var npmap = document.getElementById('iframe-map').contentWindow.NPMap;
+          var outerspatial = document.getElementById('iframe-map').contentWindow.OuterSpatial;
 
-          if (npmap && npmap.config && npmap.config.L) {
+          if (outerspatial && outerspatial.config && outerspatial.config.L) {
             clearInterval(interval);
 
             if (typeof callback === 'function') {
-              callback(npmap.config);
+              callback(outerspatial.config);
             }
 
             if (!manualRefresh) {
@@ -1599,11 +1599,11 @@ function ready () {
     Builder.ui.steps.addAndCustomizeData.load();
     Builder.ui.steps.toolsAndSettings.load();
     Builder.ui.steps.setCenterAndZoom.load();
-    delete NPMap.created;
-    delete NPMap.isPublic;
-    delete NPMap.isShared;
-    delete NPMap.modified;
-    delete NPMap.tags;
+    delete OuterSpatial.created;
+    delete OuterSpatial.isPublic;
+    delete OuterSpatial.isShared;
+    delete OuterSpatial.modified;
+    delete OuterSpatial.tags;
   }
 
   Builder.buildTooltips();
@@ -1645,39 +1645,39 @@ if (mapId) {
       if (response) {
         var version = '2.0.1';
 
-        NPMap = response;
+        OuterSpatial = response;
 
-        if (NPMap.meta) {
-          if (NPMap.meta.npmapjsVersion) {
-            version = NPMap.meta.npmapjsVersion;
+        if (OuterSpatial.meta) {
+          if (OuterSpatial.meta.outerspatialJsVersion) {
+            version = OuterSpatial.meta.outerspatialJsVersion;
           }
         } else {
-          NPMap.meta = {};
+          OuterSpatial.meta = {};
         }
 
-        if (parseInt(version.charAt(0), 10) < parseInt(npmapjsVersion.charAt(0), 10)) {
-          // Migrate from NPMap.js 2.x to 3.x
-          if (NPMap.overlays) {
-            $.each(NPMap.overlays, function (i, overlay) {
+        if (parseInt(version.charAt(0), 10) < parseInt(outerspatialJsVersion.charAt(0), 10)) {
+          // Migrate from OuterSpatial.js 2.x to 3.x
+          if (OuterSpatial.overlays) {
+            $.each(OuterSpatial.overlays, function (i, overlay) {
               if (overlay.styles && overlay.styles.point && overlay.styles.point['marker-library'] && overlay.styles.point['marker-library'] === 'npmaki') {
                 overlay.styles.point['marker-library'] = 'npmapsymbollibrary';
               }
             });
           }
 
-          if (NPMap.description) {
-            NPMap.meta.description = NPMap.description;
-            delete NPMap.description;
+          if (OuterSpatial.description) {
+            OuterSpatial.meta.description = OuterSpatial.description;
+            delete OuterSpatial.description;
           }
 
-          if (NPMap.mapId) {
-            NPMap.meta.mapId = NPMap.mapId;
-            delete NPMap.mapId;
+          if (OuterSpatial.mapId) {
+            OuterSpatial.meta.mapId = OuterSpatial.mapId;
+            delete OuterSpatial.mapId;
           }
 
-          if (NPMap.name) {
-            NPMap.meta.title = NPMap.name;
-            delete NPMap.name;
+          if (OuterSpatial.name) {
+            OuterSpatial.meta.title = OuterSpatial.name;
+            delete OuterSpatial.name;
           }
 
           $('body').append('' +
@@ -1685,7 +1685,7 @@ if (mapId) {
               '<div class="modal-dialog">' +
                 '<div class="modal-content">' +
                   '<div class="modal-body">' +
-                    '<p>Builder has upgraded your map to the latest version of NPMap.js, ' + npmapjsVersion + '. Most automated upgrades work perfectly. We ask, however, that you test your map\'s functionality before saving to ensure that everything has been migrated properly.</p><p>If everything looks good, go ahead and save the map. If, on the other hand, you run into issues, click the "Submit Feedback" link at the bottom of the window and the NPMap team will manually upgrade your map.</p><p>When testing your map, focus on the following functionality:</p><ul><li>Verify that any point symbology you setup on your map\'s overlay(s) is still working properly</li></ul>' +
+                    '<p>Builder has upgraded your map to the latest version of OuterSpatial.js, ' + outerspatialJsVersion + '. Most automated upgrades work perfectly. We ask, however, that you test your map\'s functionality before saving to ensure that everything has been migrated properly.</p><p>If everything looks good, go ahead and save the map. If, on the other hand, you run into issues, click the "Submit Feedback" link at the bottom of the window and the NPMap team will manually upgrade your map.</p><p>When testing your map, focus on the following functionality:</p><ul><li>Verify that any point symbology you setup on your map\'s overlay(s) is still working properly</li></ul>' +
                   '</div>' +
                   '<div class="modal-footer">' +
                     '<button class="btn btn-primary" data-dismiss="modal" type="button">OK</button>' +
@@ -1703,7 +1703,7 @@ if (mapId) {
           });
         }
 
-        NPMap.meta.npmapjsVersion = npmapjsVersion;
+        OuterSpatial.meta.outerspatialJsVersion = outerspatialJsVersion;
         ready();
       } else {
         window.alert(msg);
@@ -1715,9 +1715,9 @@ if (mapId) {
 } else {
   $('#mask').show();
 
-  NPMap = {
+  OuterSpatial = {
     baseLayers: [
-      'nps-parkTiles'
+      'mapbox-outdoors'
     ],
     center: {
       lat: 39.06,
@@ -1728,7 +1728,7 @@ if (mapId) {
     meta: {
       description: null,
       mapId: null,
-      npmapjsVersion: npmapjsVersion,
+      outerspatialJsVersion: outerspatialJsVersion,
       title: null
     },
     smallzoomControl: true,
